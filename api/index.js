@@ -6,10 +6,18 @@ const server = http.createServer((req, res) => {
     res.end();
 });
 
-const io = socketIO(server);
+const io = socketIO(server, {
+    pingTimeout: 60000,
+});
 
 io.on('connection', socket => {
     console.log('someone is connected');
+
+    socket.emit('connected', 'test emit');
+
+    socket.on('disconnect', () => {
+        console.log('someone has disconnected');
+    });
 });
 
 const port = 3000;
