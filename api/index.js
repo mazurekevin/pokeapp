@@ -1,5 +1,6 @@
 import http from 'http';
 import socketIO from 'socket.io';
+import { startGame } from './game';
 
 const server = http.createServer((req, res) => {
     res.write('hello world');
@@ -14,6 +15,8 @@ io.on('connection', socket => {
     console.log('someone is connected');
 
     socket.emit('connected', 'test emit');
+
+    startGame();
 
     socket.on('disconnect', () => {
         console.log('someone has disconnected');
