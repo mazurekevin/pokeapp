@@ -2,9 +2,11 @@ import http from 'http';
 import socketIO from 'socket.io';
 import { startGame } from './game';
 
+
 const server = http.createServer((req, res) => {
     res.write('hello world');
     res.end();
+    
 });
 
 const io = socketIO(server, {
@@ -12,7 +14,8 @@ const io = socketIO(server, {
 });
 
 io.on('connection', socket => {
-    console.log('someone is connected');
+    let name = socket.handshake.query.name;
+    console.log(name);
 
     socket.emit('connected', 'test emit');
 
